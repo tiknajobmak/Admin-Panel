@@ -1,0 +1,93 @@
+@charset "utf-8";
+/* CSS Document */
+
+
+
+
+@media only screen and (min-width:768px) and (max-width:1199px) {
+.image-block > img { max-width: 100%;}
+.banner-content h1 {  font: 45px/45px "DejaVuSerif";}
+.industry {  font-size: 30px;}
+.help { font-size:22px; margin-top:10px;}
+.banner .banner-block { top:10%;}
+
+
+}
+@media only screen  and (max-width :1024px) {
+
+
+}
+
+@media only screen and (min-width:768px) and (max-width :990px) {
+.type-of-course h4 { font-size:13px;}
+.course-block h3 { font-size:20px;}
+.banner-content .theme-btn { margin-top:10px;}
+.banner-content h1 {  font: 35px/35px "DejaVuSerif";}
+.industry {   font-size: 25px;}
+.help { font-size:18px;}
+}
+
+
+@media only screen and (max-width :767px) {
+.container { width:95%;}
+.brand { display: table;  float: none; margin: 10px  auto 0;}
+.head-top { display: table; float: none;  margin: 10px auto 20px;}
+.middle-content {  margin: 0em 0 0;  position: static;}
+.three-blocks .content-block { margin-top:5em;}
+.course-block {  text-align: center;}
+.course-block .theme-btn { display: table; float: none; margin: 20px auto 40px;}
+.type-of-course { display: table; margin-bottom: 44px; text-align: center; width: 100%;}
+.btm-row { display: table; margin: 0 auto; width: 310px;}
+.banner-content .theme-btn { margin-top:10px;}
+.banner-content h1 {  font: 35px/35px "DejaVuSerif";}
+.industry {   font-size: 25px;}
+.help { font-size:18px; margin-top:10px;}
+
+}
+@media only screen and (max-width :640px)  {
+.heading { font-size: 23px; padding-bottom:10px;}
+.be-in-touch h4 { font-size:40px; line-height:40px;}
+.banner .banner-block { top:4%;}
+
+}
+
+/**** iphone5 Landscape View ****/
+@media only screen and  (max-width :567px)  {
+.subscribe-block { width:100%;}
+.footer-top input[type="text"] { width:75%;}
+.footer-top input[type="submit"] { width:25%;}
+.banner-content h1 {  font: 25px/25px "DejaVuSerif"; margin:5px 0;}
+.industry {   font-size: 20px;}
+.help { font-size:15px; margin-top:10px;}
+.banner-content .theme-btn { padding:10px 15px;}
+.banner .banner-block {  top: 8%;}
+
+}
+
+@media only screen and  (max-width :479px)  {
+.heading { font-size:20px; padding-bottom:10px; line-height:22px;}
+.marvick_properties .content-block { width:100%;}
+.marvick_properties .content-block .img-block img , .img-block > img{ width:100%;}
+.marvick_team .team { width:100%;}
+.marvick_team .team.margin-zero { margin-bottom:30px;}
+.maverick-design .bcg { padding: 6em 0;}
+.banner > img { height:180px;}
+.footer-top input[type="text"] { width:65%;}
+.footer-top input[type="submit"] { width:35%;}
+}
+
+@media only screen and  (max-width :360px)  {
+.maverick-design .bcg {padding: 3em 0;}
+.btm-row { width:100%;}
+.type-of-course .image-block img { width:100%;}
+.banner > img { height:150px;}
+.banner-content h1 {  font: 20px/20px "DejaVuSerif";}
+.industry { font-size: 17px;}
+.help {  font-size: 14px; margin:0px; display:inline-block;}
+.header ul li a { font-size:12px;}
+.theme-btn { padding:10px 15px;}
+.header ul { margin:10px 10px 0 0;}
+.header ul li::before { content: "|";  font-size: 14px; padding: 0 5px;}
+
+	
+}

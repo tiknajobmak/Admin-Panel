@@ -1,0 +1,8 @@
+
+@font-face {
+	font-family: 'AvalonPlain';
+	src: url('AvalonPlain.eot?') format('eot'), 
+	     url('AvalonPlain.woff') format('woff'), 
+	     url('AvalonPlain.ttf')  format('truetype'),
+	     url('AvalonPlain.svg#AvalonPlain') format('svg');
+}
