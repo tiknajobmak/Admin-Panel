@@ -54,10 +54,11 @@
     #nestable-menu { padding: 0; margin: 20px 0; }
     @media only screen and (min-width: 700px) {
 
-        .dd { float: left; width: 48%; }
+        .dd { float: left; width: 90%; }
         .dd + .dd { margin-left: 2%; }
 
     }
+    
 
     .dd-hover > .dd-handle { background: #2ea8e5 !important; }
 
@@ -101,7 +102,13 @@
             <!-- content -->
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <h4><?php echo ($heading) ? $heading : ''; ?></h4>
+                <div class="message"><?php echo $this->session->flashdata('msg'); ?></div>
                 <!-- first-part starts -->
+                <div class="cls-btn-div col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="cls-custbtn">                 
+                    <a href="<?php echo ADMIN_URL; ?>navigations/add" /><span class="cust_button" id="add_data">Add <?php echo ($heading) ? $heading : ''; ?></span></a>
+                </div>
+                    </div>
                 <?php
                 // loop the multidimensional array recursively to generate the HTML
                 function GenerateNavHTML($nav) {
@@ -116,17 +123,28 @@
                     return $html;
                 }
                 ?>
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 navigations">
+                    <?php if(!empty($menuData)): ?>
+                        <?php $jqueryId = ''; ?>
                         <?php foreach ($menuData as $menu => $data): ?>
-                        Menu Title : <?php echo $menu ?><br>
-                        <div class="dd" id="nestable-<?php echo $menu; ?>">
+                        <?php $menuMeta = explode('_' , $menu ); ?>
+                        <?php $jqueryId .= '#'.$menu.',';  ?>
+                   
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <h1 class="nav-title">Menu Title : <span><?php echo $menuMeta[0]; ?></span></h1>
+                    <div class="nav-manage">
+                        <a href="<?php echo ADMIN_URL; ?>/navigations/edit/<?php echo $menuMeta[1]; ?>"><span class="clsedit">Edit</span></a>
+                        <a href="<?php echo ADMIN_URL; ?>/navigations/delete/<?php echo $menuMeta[1]; ?>"><span class="clsdel">Delete</span></a>
+                    </div>
+                        <div class="dd" id="<?php echo $menu; ?>">
                             <?php $navarray = $this->logicalexpert_model->displayMenu($data); ?>
-                            <?php echo '<pre>';
-        print_r($data);
-        echo '</pre>'; ?>
                             <?php echo GenerateNavHTML($navarray); ?>
                         </div>
+                </div>
                         <?php endforeach; ?>
+                        <?php else: ?>
+                       No Menu Found
+                       <?php endif; ?>
                 </div>
                 <!-- first-part ends -->
             </div>
@@ -141,8 +159,8 @@
 <?php echo (isset($js)) ? $js : ''; ?>
 <script>
     jQuery(document).ready(function () {
-        jQuery('#nestable-main-menu').nestable().on('change', function () {
-            var str = JSON.stringify(jQuery('#nestable-main-menu').nestable('serialize'));
+        jQuery('<?php echo rtrim($jqueryId, ','); ?>').nestable().on('change', function () {
+            var str = JSON.stringify(jQuery(this).nestable('serialize'));
             var jsonEncode = {menu: str};
             callAjax(jsonEncode, 'navigations/changeMenu', useBaseUrl = 1);
         });

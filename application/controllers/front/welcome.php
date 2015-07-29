@@ -48,11 +48,9 @@ class Welcome extends CI_Controller {
          * load->template('template_name',$data)
          * $params string
          */
-        echo $ret =  $this->logicalexpert_model->menu('class=ul-menu' , 'class=li-menu');
-        echo  '<pre>';
-        //print_r($ret);
-        echo  '</pre>';
-        
+        // get menu listing
+        echo $ret =  $this->logicalexpert_model->menu('menu-footer-new' ,  'class=ul-menu' , 'class=li-menu');        
+        echo '<br>'.$ret =  $this->logicalexpert_model->menu('footer-upper' ,  'class=ul-menu' , 'class=li-menu');        
         $whereCondition = array('status' => 1, 'handle' => $pageName);
         $data = $this->logicalexpert_model->getSingleData('pages', $whereCondition);
         $this->data['pageData'] = (!empty($data)) ? $data[0] : "Page Does Not Exit or Not Enable";

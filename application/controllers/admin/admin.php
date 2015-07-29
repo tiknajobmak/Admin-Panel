@@ -38,7 +38,4 @@ class Admin extends CI_Controller {
         $this->session->set_flashdata('msg', '<div class="alert alert-success text-center">Logout Successfully!</div>');
         redirect('adminLogin');
     }
-//    public function adminUsers() {
-//        $this->load->view('admin/adminUsers', $this->data);
-//    }
 }

@@ -29,7 +29,7 @@ class registerUsers extends CI_Controller {
         $this->load->view('admin/templates/header.php');
         // returns number of pages per page
         $totalRows = $this->logicalexpert_model->countRows('users','userType','user');
-        $perPage = $this->paginationInitialize( '' , $totalRows);
+        $perPage = $this->paginationInitialize( 5 , $totalRows);
         $offset = ($this->uri->segment(4)) ? $this->uri->segment(4) : 0;
         $data['userData'] = $this->logicalexpert_model->getAllData('users',array('userType' => 'user'),'','',$perPage,$offset);
         // create pagination links

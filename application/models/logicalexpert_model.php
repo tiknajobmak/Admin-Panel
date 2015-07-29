@@ -73,7 +73,7 @@ class LogicalExpert_model extends CI_Model {
             }
         }
         $query = $this->db->get();
-        echo $this->print_query();
+        //echo $this->print_query();
         //exit;
         return ($type == 'object') ? $query->result() : $query->result_array();
     }
@@ -113,6 +113,17 @@ class LogicalExpert_model extends CI_Model {
         $this->db->insert($tableName, $data);
         return $insert_id = $this->db->insert_id();
     }
+    /*
+     * Insert record
+     * @param {string} $tableName
+     * @param {array} $data
+     * @returns {array/object}
+     */
+
+    public function insertMultipleData($tableName, $data) {
+        $this->db->insert_batch($tableName, $data);
+        return $insert_id = $this->db->insert_id();
+    }
 
     /*
      * update record
@@ -126,6 +137,20 @@ class LogicalExpert_model extends CI_Model {
     public function updateData($tableName, $data, $updateIdCol, $updateIdVal) {
         $this->db->where($updateIdCol, $updateIdVal);
         $this->db->update($tableName, $data);
+        return $this->db->affected_rows();
+    }
+    /*
+     * update record
+     * @param {string} $tableName
+     * @param {array} $data
+     * @param {string} $updateIdCol
+     * @param {string} $updateIdVal
+     * @returns {int}
+     */
+
+    public function updateMultipleData($tableName, $data, $key) {
+        //$this->db->where($updateIdCol, $updateIdVal);
+        $this->db->update_batch($tableName, $data , $key);
         return $this->db->affected_rows();
     }
 
@@ -308,14 +333,23 @@ class LogicalExpert_model extends CI_Model {
         }
         return $httpParsedResponseAr;
     }
+     /* total number of users visited the site
+      * @param {array} $tableName
+     *  @returns {integer} number of users
+     */
     public function countTotalUsersVisited($tableName , $type = 'array'){
         $this->db->select('COUNT(*) AS `count`');
         $this->db->from($tableName);
         $query = $this->db->get();
-        //echo $this->print_query();
-        
         return ($type == 'object') ? $query->result() : $query->result_array();
     }
+    
+    /* 
+     * Recursive loop to generate multidimentional array having parent child relation
+     * @param {array} $nav (array to generate parent child relation) 
+     * @param  {integer} $parent ( ul attr )
+     * @returns array
+     */
     public function displayMenu($arr , $parent = 0){
         $pages = Array();
         foreach ($arr as $page) {
@@ -326,8 +360,15 @@ class LogicalExpert_model extends CI_Model {
         }
         return $pages;
     }
-     // loop the multidimensional array recursively to generate the HTML
-    function GenerateNavHTML($nav , $ulAttr , $liAttr ) {
+     
+    /* 
+     * Recursive loop to generate the HTML for menu from multidimentional array
+     * @param {array} $nav (array with parent child relation) 
+     * @param  {string} $ulAttr ( ul attr )
+     * @param  {string} $liAttr ( li attr )
+     * @returns HTML for menu
+     */
+    public function generateNavHTML($nav , $ulAttr  , $liAttr ) {
         $html = '<ul '.$ulAttr.'>';
         foreach ($nav as $page) {
             $html .= '<li '.$liAttr.' data-id="' . $page['pageId'] . '">';
@@ -338,10 +379,20 @@ class LogicalExpert_model extends CI_Model {
         $html .= "</ul>";
         return $html;
     }
-    public function menu($ulAttr , $liAttr){
-        $pages = $this->getAllData('pages');
-        $nav = $this->displayMenu($pages );
-        return $this->GenerateNavHTML($nav , $ulAttr , $liAttr);
+    /*
+     * @param {string} $menuName (menu nanme to call) 
+     * @param  {string} $ulAttr ( ul attr for u; )
+     * @param  {string} $liAttr ( string to call API )
+     * @returns HTML for menu
+     */
+
+    public function menu($menuName , $ulAttr , $liAttr){
+        $sort = array('sortCol' => 'menuPosition','orderBy' => 'asc');
+        $whereCondition = array('status' => 1 , 'menuName' => $menuName);
+        $joinData = array('pages' => 'pageId = menuPageId' , 'menu' => 'menuId = menuMenuId');
+        $pages = $this->getAllData('menuMeta',$whereCondition,$joinData,array('pages.pageId','pages.handle' , 'pages.title' , 'menuMeta.menuParent as parent', 'menuMeta.menuPosition' , 'menuMeta.menuMetaId'),'','',$sort);
+        $nav = $this->displayMenu($pages);
+        return $this->generateNavHTML($nav , $ulAttr ,  $liAttr);
     }
 
 }
